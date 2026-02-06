@@ -2,6 +2,7 @@ import * as BABYLON from "@babylonjs/core";
 import "@babylonjs/loaders";
 
 class Playground {
+
     public static CreateScene(engine: BABYLON.Engine, canvas: HTMLCanvasElement): BABYLON.Scene {
         // This creates a basic Babylon Scene object (non-mesh)
         var scene = new BABYLON.Scene(engine);
@@ -21,14 +22,14 @@ class Playground {
         // Default intensity is 1. Let's dim the light a small amount
         light.intensity = 0.7;
 
-        // Our built-in 'sphere' shape. Params: name, subdivs, size, scene
-        var sphere = BABYLON.Mesh.CreateSphere("sphere1", 16, 2, scene);
-
-        // Move the sphere upward 1/2 its height
-        sphere.position.y = 1;
-
         // Our built-in 'ground' shape. Params: name, width, depth, subdivs, scene
         var ground = BABYLON.Mesh.CreateGround("ground1", 6, 6, 2, scene);
+
+        const groundMaterial = new BABYLON.StandardMaterial("Ground Material", scene);
+        groundMaterial.diffuseColor = BABYLON.Color3.Red();
+        let groundTexture = new BABYLON.Texture("https://textures.checkerboard_basecolor_png.path", scene);
+        groundMaterial.diffuseTexture = groundTexture;
+        ground.material = groundMaterial;
 
         return scene;
     }
