@@ -2,20 +2,17 @@ import { Engine, Scene, FreeCamera, HemisphericLight, Vector3, MeshBuilder, Mesh
      StandardMaterial, Color3, Texture, ImportMeshAsync } from "@babylonjs/core";
 
 import "@babylonjs/loaders";
-//import { registerBuiltInLoaders } from "babylonjs-loaders/dynamic";
 
 const canvas: any = document.getElementById("renderCanvas");
 const engine: Engine = new Engine(canvas, true);
 
 const createScene = () =>  {
-
-   // registerBuiltInLoaders();
-    
+       
     // This creates a basic Babylon Scene object (non-mesh)
-    const scene = new Scene(engine);
+    const scene: Scene = new Scene(engine);
 
     // This creates and positions a free camera (non-mesh)
-    const camera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene);
+    const camera: FreeCamera = new FreeCamera("camera1", new Vector3(0, 5, -10), scene);
 
     // This targets the camera to scene origin
     camera.setTarget(Vector3.Zero());
@@ -24,18 +21,18 @@ const createScene = () =>  {
     camera.attachControl(canvas, true);
 
     // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
-    const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+    const light: HemisphericLight = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
 
     // Default intensity is 1. Let's dim the light a small amount
     light.intensity = 0.7;
     
     // Our built-in 'ground' shape.
-    const ground = MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
+    const ground: Mesh = MeshBuilder.CreateGround("ground", {width: 6, height: 6}, scene);
 
     const groundMaterial = new StandardMaterial("Ground Material", scene);
     groundMaterial.diffuseColor = Color3.Red();
     
-    const groundTexture = new Texture("./assets/textures/checkerboard_basecolor.png", scene);
+    const groundTexture: Texture = new Texture("./assets/textures/checkerboard_basecolor.png", scene);
     groundMaterial.diffuseTexture = groundTexture;
     ground.material = groundMaterial;
 

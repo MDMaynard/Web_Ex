@@ -1,5 +1,3 @@
-//import * as THREE from 'three';
-//import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
 //import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
 //import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
 //import { Pathfinding } from 'three/addons/three-pathfinding.module.js';
@@ -9,49 +7,70 @@
 //import { Interactable } from '../../libs/Interactable.js';
 //import { Player } from '../../libs/Player.js';
 //import { LoadingBar } from '../../libs/LoadingBar.js';
+import { Engine, Scene, UniversalCamera, HemisphericLight, DirectionalLight, Vector3, MeshBuilder, Mesh,
+     StandardMaterial, Color3, Texture, ImportMeshAsync, ShadowGenerator } from "@babylonjs/core";
+
+import "@babylonjs/loaders";
 
 class App{
-    /*
+    
 	constructor(){
-		const container = document.createElement( 'div' );
-		document.body.appendChild( container );
 
-		this.assetsPath = '../../assets/';
-        
-		this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 0.1, 3000 );
-		this.camera.position.set( 0, 1.6, 0 );
-        
-		this.scene = new THREE.Scene();
-        
-		const ambient = new THREE.HemisphereLight(0x555555, 0x999999);
-		this.scene.add(ambient);
-		
-		this.sun = new THREE.DirectionalLight( 0xAAAAFF, 2.5 );
-		this.sun.castShadow = true;
+		const canvas: any = document.getElementById("renderCanvas");
+        const engine: Engine = new Engine(canvas, true);
 
-		const lightSize = 5;
-        this.sun.shadow.camera.near = 0.1;
-        this.sun.shadow.camera.far = 17;
-		this.sun.shadow.camera.left = this.sun.shadow.camera.bottom = -lightSize;
-		this.sun.shadow.camera.right = this.sun.shadow.camera.top = lightSize;
+		const assetsPath = "./assets/";
 
-        //this.sun.shadow.bias = 0.0039;
-        this.sun.shadow.mapSize.width = 1024;
-        this.sun.shadow.mapSize.height = 1024;
-        
-		this.sun.position.set( 0, 10, 10 );
-		this.scene.add( this.sun );
-		
-		this.debug = { showPath:false, teleport: true };
-			
-		this.renderer = new THREE.WebGLRenderer({ antialias: true } );
-		this.renderer.setPixelRatio( window.devicePixelRatio );
-		this.renderer.setSize( window.innerWidth, window.innerHeight );
-		this.renderer.shadowMap.enabled = true;
-        this.renderer.outputEncoding = THREE.sRGBEncoding;
-		container.appendChild( this.renderer.domElement );
-        this.setEnvironment();
+        // This creates a basic Babylon Scene object (non-mesh)
+        const scene = new Scene(engine);
 
+        // This creates and positions a free camera (non-mesh)
+        const camera = new UniversalCamera("UniversalCamera", new Vector3(0, 5, -10), scene);
+        // This targets the camera to scene origin
+        camera.setTarget(Vector3.Zero());
+
+        // This attaches the camera to the canvas
+        camera.attachControl(canvas, true);
+
+        // This creates a light, aiming 0,1,0 - to the sky (non-mesh)
+        const light = new HemisphericLight("light", new Vector3(0, 1, 0), scene);
+
+        // Default intensity is 1. Let's dim the light a small amount
+        light.intensity = 0.7;
+
+        const sun = new DirectionalLight("DirectionalLight", new Vector3(0, -1, 0), scene);
+        sun.shadowEnabled = true;
+                
+        const lightSize = 5;
+
+        sun.shadowMinZ = 0.1;
+        sun.shadowMaxZ = 17;
+        sun.shadowFrustumSize = lightSize;
+        sun.shadowOrthoScale = 1024;
+
+        sun.position = new Vector3(0.0, 10.0, 10.0);
+
+        const shadowGenerator = new ShadowGenerator(1024, sun); // 1024 is the texture size (power of 2 is best)
+
+                
+		//this.debug = { showPath:false, teleport: true };
+        // Set the hardware scaling level to match the device's pixel ratio
+        engine.setHardwareScalingLevel(1 / window.devicePixelRatio);
+
+        /*
+        function setEnvironment();
+
+        setEnvironment(){
+        const loader = new RGBELoader().setPath( '../../assets/' )
+        loader.load( 'hdr/venice_sunset_1k.hdr', ( texture ) => {
+    
+            texture.mapping = THREE.EquirectangularReflectionMapping;
+            const envMap = texture;
+            
+            this.scene.environment = envMap;
+    
+        } );
+   
         this.workingMatrix = new THREE.Matrix4();
 
 		this.clock = new THREE.Clock();
@@ -77,17 +96,7 @@ class App{
         this.renderer.setSize( window.innerWidth, window.innerHeight ); 
     }
 	
-    setEnvironment(){
-        const loader = new RGBELoader().setPath( '../../assets/' )
-        loader.load( 'hdr/venice_sunset_1k.hdr', ( texture ) => {
     
-            texture.mapping = THREE.EquirectangularReflectionMapping;
-            const envMap = texture;
-            
-            this.scene.environment = envMap;
-    
-        } );
-    }
     
 	loadEnvironment(){
         
