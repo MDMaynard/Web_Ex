@@ -1,4 +1,5 @@
-import { Engine, Scene, ArcRotateCamera, Vector3, VideoDome,  WebXRDefaultExperience } from "@babylonjs/core";
+import { Engine, Scene, ArcRotateCamera, Vector3, VideoDome,  WebXRDefaultExperience, WebXRFeatureName,
+    TransformNode } from "@babylonjs/core";
 
 import "@babylonjs/loaders";
 
@@ -20,7 +21,14 @@ const createScene = () => {
     const videoDome = new VideoDome("videoDome", "./assets/photoDomes/solarProbeMission.mp4", { resolution: 32, clickToPlay: true }, scene );
     
     // XR enable.
-    const xrHelper = scene.createDefaultXRExperienceAsync();
+    //const xrHelper = scene.createDefaultXRExperienceAsync();
+    scene.createDefaultXRExperienceAsync({ disableTeleportation: true }).then((xr) => {
+    
+        const xrRoot = new TransformNode("xrRoot", scene);
+        xr.baseExperience.camera.parent = xrRoot;
+        xr.baseExperience.featuresManager.enableFeature( 
+        WebXRFeatureName.WALKING_LOCOMOTION, "latest", { locomotionTarget: xrRoot });
+    });
     
 
     return scene;
