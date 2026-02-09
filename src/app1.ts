@@ -18,11 +18,11 @@ const createScene = () => {
     camera.attachControl(canvas, true);
 
     // VideoDome
-    // const videoDome = new VideoDome("videoDome", "./assets/photoDomes/solarProbeMission.mp4", { resolution: 32, clickToPlay: true }, scene );
+    const videoDome = new VideoDome("videoDome", "./assets/photoDomes/solarProbeMission.mp4", { resolution: 32, clickToPlay: true }, scene );
     
     // PhotoDome
-    const photoDome = new PhotoDome( "testDome", "assets/photoDomes/equirectangular.jpg", { resolution: 32, size: 1000, useDirectMapping: false }, scene );
-    photoDome.fovMultiplier = 2.0;
+    //const photoDome = new PhotoDome( "testDome", "assets/photoDomes/equirectangular.jpg", { resolution: 32, size: 1000, useDirectMapping: false }, scene );
+    //photoDome.fovMultiplier = 2.0;
         
     // XR enable.
     //const xrHelper = scene.createDefaultXRExperienceAsync();
