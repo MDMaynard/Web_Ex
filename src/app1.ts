@@ -1,4 +1,4 @@
-import { Engine, Scene, ArcRotateCamera, Vector3, VideoDome,  WebXRDefaultExperience, WebXRFeatureName,
+import { Engine, Scene, ArcRotateCamera, Vector3, VideoDome, PhotoDome,  WebXRDefaultExperience, WebXRFeatureName,
     TransformNode } from "@babylonjs/core";
 
 import "@babylonjs/loaders";
@@ -17,9 +17,13 @@ const createScene = () => {
     // This attaches the camera to the canvas
     camera.attachControl(canvas, true);
 
-    // video Dome
-    const videoDome = new VideoDome("videoDome", "./assets/photoDomes/solarProbeMission.mp4", { resolution: 32, clickToPlay: true }, scene );
+    // VideoDome
+    // const videoDome = new VideoDome("videoDome", "./assets/photoDomes/solarProbeMission.mp4", { resolution: 32, clickToPlay: true }, scene );
     
+    // PhotoDome
+    const photoDome = new PhotoDome( "testDome", "assets/photoDomes/360photo.jpg", { resolution: 32, size: 1000, useDirectMapping: false }, scene );
+    photoDome.fovMultiplier = 2.0;
+        
     // XR enable.
     //const xrHelper = scene.createDefaultXRExperienceAsync();
     scene.createDefaultXRExperienceAsync({ disableTeleportation: true }).then((xr) => {
