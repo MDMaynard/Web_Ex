@@ -17,7 +17,7 @@ const createScene = () => {
     camera.attachControl(canvas, true);
 
     // video Dome
-    const videoDome = new VideoDome("videoDome", ["./assets/photoDomes.solarProbeMission.mp4"], {resolution: 32, clickToPlay: true }, scene );
+    const videoDome = new VideoDome("videoDome", "./assets/photoDomes.solarProbeMission.mp4", { resolution: 32, clickToPlay: true }, scene );
     
     // XR enable.
     const xrHelper = scene.createDefaultXRExperienceAsync();
