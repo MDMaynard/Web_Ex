@@ -1,12 +1,3 @@
-//import { RGBELoader } from 'three/addons/loaders/RGBELoader.js';
-//import { XRControllerModelFactory } from 'three/addons/webxr/XRControllerModelFactory.js';
-//import { Pathfinding } from 'three/addons/three-pathfinding.module.js';
-//import Stats from 'three/addons/libs/stats.module.js';
-//import { VRButton } from '../../libs/VRButton.js';
-//import { TeleportMesh } from '../../libs/TeleportMesh.js';
-//import { Interactable } from '../../libs/Interactable.js';
-//import { Player } from '../../libs/Player.js';
-//import { LoadingBar } from '../../libs/LoadingBar.js';
 import { Engine, Scene, UniversalCamera, HemisphericLight, DirectionalLight, Vector3, MeshBuilder, Mesh,
      StandardMaterial, Color3, Texture, ImportMeshAsync, ShadowGenerator } from "@babylonjs/core";
 
@@ -38,20 +29,22 @@ class App{
         // Default intensity is 1. Let's dim the light a small amount
         light.intensity = 0.7;
 
-        const sun = new DirectionalLight("DirectionalLight", new Vector3(0, -1, 0), scene);
-        sun.shadowEnabled = true;
-                
         const lightSize = 5;
 
+        const sun = new DirectionalLight("DirectionalLight", new Vector3(0, -1, 0), scene);
+        sun.shadowEnabled = true;
         sun.shadowMinZ = 0.1;
         sun.shadowMaxZ = 17;
         sun.shadowFrustumSize = lightSize;
         sun.shadowOrthoScale = 1024;
-
         sun.position = new Vector3(0.0, 10.0, 10.0);
 
         const shadowGenerator = new ShadowGenerator(1024, sun); // 1024 is the texture size (power of 2 is best)
 
+        ImportMeshAsync("./assets/meshes/dungeon.glb", scene ).then(function( {meshes} ) { 
+        
+                meshes[0].scaling = new Vector3(0.1, 0.1, 0.1);
+    });
                 
 		//this.debug = { showPath:false, teleport: true };
         // Set the hardware scaling level to match the device's pixel ratio

@@ -36,9 +36,10 @@ const createScene = () =>  {
     groundMaterial.diffuseTexture = groundTexture;
     ground.material = groundMaterial;
 
-    ImportMeshAsync("./assets/meshes/YetiSmall.glb", scene ).then(function( {meshes} ) { 
+    ImportMeshAsync("./assets/meshes/dungeon.glb", scene ).then(function( {meshes} ) { 
         
-                meshes[0].scaling = new Vector3(0.1, 0.1, 0.1);
+                //meshes[0].scaling = new Vector3(0.1, 0.1, 0.1);
+                meshes[0].scaling = new Vector3(1.0, 1.0, 1.0);
     });
 
 

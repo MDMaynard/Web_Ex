@@ -18,6 +18,8 @@
         "outDir": "./src/"
     },
     "files": [
-        "./src/app1.ts"
+        "./src/index.ts"
+        //"./src/app.ts"
+        //"./src/app1.ts"
     ]
 }
