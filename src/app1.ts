@@ -1,6 +1,6 @@
 import { Engine, Scene, FreeCamera, HemisphericLight, Vector3, MeshBuilder, Mesh,
      StandardMaterial, Color3, Texture, ImportMeshAsync } from "@babylonjs/core";
-
+import { WebXRFeatureName, TransformNode} from "@babylonjs/core"
 import "@babylonjs/loaders";
 
 const canvas: any = document.getElementById("renderCanvas");
@@ -41,14 +41,14 @@ const createScene = () =>  {
                 meshes[0].scaling = new Vector3(1.0, 1.0, 1.0);
     });        
     // XR enable.
-    //const xrHelper = scene.createDefaultXRExperienceAsync();
-    /*scene.createDefaultXRExperienceAsync({ disableTeleportation: true }).then((xr) => {
+    const xrHelper = scene.createDefaultXRExperienceAsync();
+    scene.createDefaultXRExperienceAsync({ disableTeleportation: true }).then((xr) => {
     
         const xrRoot = new TransformNode("xrRoot", scene);
         xr.baseExperience.camera.parent = xrRoot;
         xr.baseExperience.featuresManager.enableFeature( 
         WebXRFeatureName.WALKING_LOCOMOTION, "latest", { locomotionTarget: xrRoot });
-    });*/
+    });
     
 
     return scene;
